@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Section from './Section/Section';
 import AddContactForm from './Form/Form';
 
 class App extends Component {
@@ -12,7 +13,10 @@ class App extends Component {
     return (
       <>
         <h1>Phonebook</h1>
-        <AddContactForm />
+        <Section>
+          <AddContactForm />
+        </Section>
+        <Section title="Contacts"></Section>
       </>
     );
   }
