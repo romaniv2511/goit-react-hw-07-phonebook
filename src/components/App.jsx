@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { Section } from './Section/Section';
 import { ContactsForm } from './Form/Form';
 import { ContactsList } from './Contacts/ContactsList/ContactsList';
-import Filter from './Filter/Filter';
+import { Filter } from './Filter/Filter';
 
 export class App extends Component {
   state = {
@@ -18,6 +18,14 @@ export class App extends Component {
   };
 
   addContact = ({ name, number }) => {
+    const allNames = this.state.contacts.reduce(
+      (acc, item) => [...acc, item.name],
+      []
+    );
+    if (allNames.includes(name)) {
+      alert(`${name} is already in contacts`);
+      return;
+    }
     const contact = {
       id: nanoid(),
       name,

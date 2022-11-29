@@ -1,4 +1,4 @@
-const Filter = ({ onChange, value }) => {
+export const Filter = ({ onChange, value }) => {
   return (
     <>
       <p>Find contacts by name</p>
@@ -11,5 +11,3 @@ const Filter = ({ onChange, value }) => {
     </>
   );
 };
-
-export default Filter;
