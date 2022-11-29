@@ -1,50 +1,13 @@
 import { Component } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import styled from 'styled-components';
-
-const FormStyled = styled(Form)`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px 12px;
-  border: 2px solid black;
-  border-radius: 2px;
-  margin-bottom: 16px;
-  max-width: 400px;
-`;
-const Label = styled.label`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  height: 92px;
-`;
-const Input = styled(Field)`
-  border: 1px solid black;
-  border-radius: 4px;
-
-  font-size: 16px;
-  padding: 4px 8px;
-`;
-const Error = styled(ErrorMessage)`
-  font-size: 12px;
-  color: red;
-`;
-const Btn = styled.button`
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.2;
-  background-color: lightGrey;
-  cursor: pointer;
-  &:hover,
-  &:focus {
-    background-color: darkBlue;
-    color: white;
-  }
-`;
+import {
+  FormAddContact,
+  FormLabel,
+  FormInput,
+  FormError,
+  FormBtn,
+} from './Form.styled';
 
 class ContactsForm extends Component {
   schema = Yup.object().shape({
@@ -74,19 +37,19 @@ class ContactsForm extends Component {
         onSubmit={this.handleSubmit}
         validationSchema={this.schema}
       >
-        <FormStyled>
-          <Label htmlFor="name">
+        <FormAddContact>
+          <FormLabel htmlFor="name">
             Name
-            <Input id="name" name="name" />
-            <Error component="span" name="name" />
-          </Label>
-          <Label htmlFor="number">
+            <FormInput id="name" name="name" />
+            <FormError component="span" name="name" />
+          </FormLabel>
+          <FormLabel htmlFor="number">
             Number
-            <Input id="number" name="number" type="tel" />
-            <Error component="span" name="number" />
-          </Label>
-          <Btn type="submit">Add contact</Btn>
-        </FormStyled>
+            <FormInput id="number" name="number" type="tel" />
+            <FormError component="span" name="number" />
+          </FormLabel>
+          <FormBtn type="submit">Add contact</FormBtn>
+        </FormAddContact>
       </Formik>
     );
   }

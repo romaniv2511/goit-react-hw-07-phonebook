@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import Section from './Section/Section';
 import ContactsForm from './Form/Form';
 import ContactsList from './Contacts/ContactsList';
+import Filter from './Filter/Filter';
 
 class App extends Component {
   state = {
@@ -10,6 +11,9 @@ class App extends Component {
       { id: 'qweqw', name: 'ada', number: '644646646' },
       { id: 'qweqww', name: 'asdasfaf', number: '123413252' },
     ],
+    name: '',
+    nunmber: '',
+    filter: '',
   };
 
   addContact = ({ name, number }) => {
@@ -18,10 +22,13 @@ class App extends Component {
       name,
       number,
     };
-    console.log(contact);
     this.setState(prevState => ({
       contacts: [contact, ...prevState.contacts],
     }));
+  };
+  filterContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(contact => contact.name.includes(filter));
   };
   render() {
     return (
@@ -31,7 +38,11 @@ class App extends Component {
           <ContactsForm onSubmit={this.addContact} />
         </Section>
         <Section title="Contacts">
-          <ContactsList contacts={this.state.contacts} />
+          <Filter
+            onChange={e => this.setState({ filter: e.target.value })}
+            value={this.state.filter}
+          />
+          <ContactsList contacts={this.filterContacts()} />
         </Section>
       </>
     );
