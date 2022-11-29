@@ -1,11 +1,12 @@
 import { Component } from 'react';
+import { GlobalStyle } from './GlobalStyles';
 import { nanoid } from 'nanoid';
-import Section from './Section/Section';
-import ContactsForm from './Form/Form';
-import ContactsList from './Contacts/ContactsList';
+import { Section } from './Section/Section';
+import { ContactsForm } from './Form/Form';
+import { ContactsList } from './Contacts/ContactsList/ContactsList';
 import Filter from './Filter/Filter';
 
-class App extends Component {
+export class App extends Component {
   state = {
     contacts: [
       { id: 'qweqw', name: 'ada', number: '644646646' },
@@ -26,6 +27,13 @@ class App extends Component {
       contacts: [contact, ...prevState.contacts],
     }));
   };
+  removeContact = contactId => {
+    const newContactsList = this.state.contacts.reduce((acc, item) => {
+      return item.id === contactId ? acc : [...acc, item];
+    }, []);
+
+    this.setState({ contacts: newContactsList });
+  };
   filterContacts = () => {
     const { contacts, filter } = this.state;
     return contacts.filter(contact => contact.name.includes(filter));
@@ -33,6 +41,7 @@ class App extends Component {
   render() {
     return (
       <>
+        <GlobalStyle />
         <h1>Phonebook</h1>
         <Section>
           <ContactsForm onSubmit={this.addContact} />
@@ -42,11 +51,12 @@ class App extends Component {
             onChange={e => this.setState({ filter: e.target.value })}
             value={this.state.filter}
           />
-          <ContactsList contacts={this.filterContacts()} />
+          <ContactsList
+            contacts={this.filterContacts()}
+            onBtnClick={this.removeContact}
+          />
         </Section>
       </>
     );
   }
 }
-
-export default App;

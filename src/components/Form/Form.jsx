@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 import {
   FormAddContact,
   FormLabel,
@@ -9,7 +10,7 @@ import {
   FormBtn,
 } from './Form.styled';
 
-class ContactsForm extends Component {
+export class ContactsForm extends Component {
   schema = Yup.object().shape({
     name: Yup.string()
       .matches(
@@ -54,5 +55,6 @@ class ContactsForm extends Component {
     );
   }
 }
-
-export default ContactsForm;
+ContactsForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
