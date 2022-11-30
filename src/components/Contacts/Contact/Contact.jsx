@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
+import { Name } from './Contact.styled';
 
 export const Contact = ({ name, number }) => (
   <div>
-    <span>{name}:</span>
+    <Name>{name}:</Name>
     <span> {number}</span>
   </div>
 );

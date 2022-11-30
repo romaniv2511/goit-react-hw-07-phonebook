@@ -41,7 +41,7 @@ export class ContactsForm extends Component {
         <FormAddContact>
           <FormLabel htmlFor="name">
             Name
-            <FormInput id="name" name="name" />
+            <FormInput id="name" name="name" type="text" />
             <FormError component="span" name="name" />
           </FormLabel>
           <FormLabel htmlFor="number">

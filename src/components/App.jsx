@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { GlobalStyle } from './GlobalStyles';
 import { nanoid } from 'nanoid';
+import { GlobalStyle } from './GlobalStyles';
 import { Section } from './Section/Section';
 import { ContactsForm } from './Form/Form';
 import { ContactsList } from './Contacts/ContactsList/ContactsList';
@@ -8,12 +8,7 @@ import { Filter } from './Filter/Filter';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'qweqw', name: 'ada', number: '644646646' },
-      { id: 'qweqww', name: 'asdasfaf', number: '123413252' },
-    ],
-    name: '',
-    nunmber: '',
+    contacts: [],
     filter: '',
   };
 
