@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Contact } from '../Contact/Contact';
 import { List, Item, Button } from './ContactsList.styled';
 
@@ -8,7 +9,7 @@ export const ContactsList = ({ contacts, onBtnClick }) => (
         <Contact name={name} number={number} />
         <Button
           type="button"
-          onClick={e => {
+          onClick={() => {
             onBtnClick(id);
           }}
         >
@@ -18,3 +19,11 @@ export const ContactsList = ({ contacts, onBtnClick }) => (
     ))}
   </List>
 );
+ContactsList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onBtnClick: PropTypes.func.isRequired,
+};

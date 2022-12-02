@@ -17,7 +17,7 @@ export class App extends Component {
       (acc, item) => [...acc, item.name],
       []
     );
-    if (allNames.includes(name)) {
+    if (allNames.some(i => i.toLowerCase() === name.toLowerCase())) {
       alert(`${name} is already in contacts`);
       return;
     }
@@ -31,12 +31,11 @@ export class App extends Component {
     }));
   };
   removeContact = contactId => {
-    const newContactsList = this.state.contacts.reduce((acc, item) => {
-      return item.id === contactId ? acc : [...acc, item];
-    }, []);
-
-    this.setState({ contacts: newContactsList });
+    this.setState({
+      contacts: this.state.contacts.filter(contact => contact.id !== contactId),
+    });
   };
+  handleChangeFilter = e => this.setState({ filter: e.target.value });
   filterContacts = () => {
     const { contacts, filter } = this.state;
     return contacts.filter(contact =>
@@ -52,14 +51,18 @@ export class App extends Component {
           <ContactsForm onSubmit={this.addContact} />
         </Section>
         <Section title="Contacts">
-          <Filter
-            onChange={e => this.setState({ filter: e.target.value })}
-            value={this.state.filter}
-          />
-          <ContactsList
-            contacts={this.filterContacts()}
-            onBtnClick={this.removeContact}
-          />
+          {!!this.state.contacts.length && (
+            <>
+              <Filter
+                onChange={this.handleChangeFilter}
+                value={this.state.filter}
+              />
+              <ContactsList
+                contacts={this.filterContacts()}
+                onBtnClick={this.removeContact}
+              />
+            </>
+          )}
         </Section>
       </>
     );
