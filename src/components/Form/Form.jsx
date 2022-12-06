@@ -10,25 +10,24 @@ import {
   FormBtn,
 } from './Form.styled';
 
+const schema = Yup.object().shape({
+  name: Yup.string()
+    .matches(
+      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
+      'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore'
+    )
+    .max(16)
+    .required(),
+  number: Yup.string()
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+      'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
+    )
+    .min(5)
+    .max(16)
+    .required(),
+});
 export class ContactsForm extends Component {
-  schema = Yup.object().shape({
-    name: Yup.string()
-      .matches(
-        /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
-        'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore'
-      )
-      .max(16)
-      .required(),
-    number: Yup.string()
-      .matches(
-        /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-        'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
-      )
-      .min(5)
-      .max(16)
-      .required(),
-  });
-
   handleSubmit = (values, { resetForm }) => {
     this.props.onSubmit(values);
     resetForm();
@@ -39,7 +38,7 @@ export class ContactsForm extends Component {
       <Formik
         initialValues={{ name: '', number: '' }}
         onSubmit={this.handleSubmit}
-        validationSchema={this.schema}
+        validationSchema={schema}
       >
         <FormAddContact>
           <FormLabel htmlFor="name">

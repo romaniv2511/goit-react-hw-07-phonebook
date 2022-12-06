@@ -7,7 +7,7 @@ export const Filter = ({ onChange, value }) => {
       <input
         name="filterByName"
         type="text"
-        onChange={onChange}
+        onChange={e => onChange(e.target.value)}
         value={value}
       />
     </>

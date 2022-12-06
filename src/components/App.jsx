@@ -13,14 +13,14 @@ export class App extends Component {
   };
 
   addContact = ({ name, number }) => {
-    const allNames = this.state.contacts.reduce(
-      (acc, item) => [...acc, item.name],
-      []
+    const isInContacts = this.state.contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
     );
-    if (allNames.some(i => i.toLowerCase() === name.toLowerCase())) {
+    if (isInContacts) {
       alert(`${name} is already in contacts`);
       return;
     }
+
     const contact = {
       id: nanoid(),
       name,
@@ -31,11 +31,11 @@ export class App extends Component {
     }));
   };
   removeContact = contactId => {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact.id !== contactId),
-    });
+    this.setState(prev => ({
+      contacts: prev.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
-  handleChangeFilter = e => this.setState({ filter: e.target.value });
+  handleChangeFilter = filterValue => this.setState({ filter: filterValue });
   filterContacts = () => {
     const { contacts, filter } = this.state;
     return contacts.filter(contact =>
