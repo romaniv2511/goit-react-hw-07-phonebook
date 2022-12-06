@@ -6,12 +6,25 @@ import { ContactsForm } from './Form/Form';
 import { ContactsList } from './Contacts/ContactsList/ContactsList';
 import { Filter } from './Filter/Filter';
 
+const CONTACTS_KEY = 'contacts';
+
 export class App extends Component {
   state = {
     contacts: [],
     filter: '',
   };
-
+  componentDidMount() {
+    const contacts = localStorage.getItem(CONTACTS_KEY);
+    const parsedContacts = JSON.parse(contacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+  componentDidUpdate(_, prevState) {
+    if (prevState.contact !== this.state.contacts) {
+      localStorage.setItem(CONTACTS_KEY, JSON.stringify(this.state.contacts));
+    }
+  }
   addContact = ({ name, number }) => {
     const isInContacts = this.state.contacts.some(
       contact => contact.name.toLowerCase() === name.toLowerCase()
