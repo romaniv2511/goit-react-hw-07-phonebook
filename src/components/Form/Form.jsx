@@ -1,14 +1,8 @@
-import { Component } from 'react';
-import { Formik } from 'formik';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import {
-  FormAddContact,
-  FormLabel,
-  FormInput,
-  FormError,
-  FormBtn,
-} from './Form.styled';
+import { Form, Label, Input, Error, FormBtn } from './Form.styled';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -19,44 +13,48 @@ const schema = Yup.object().shape({
     .max(16)
     .required(),
   number: Yup.string()
-    .matches(
-      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-      'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
-    )
     .min(5)
     .max(16)
+    .matches(
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
+      'Phone number must be at digits and can contain spaces, dashes, parentheses and can start with +'
+    )
+
     .required(),
 });
-export class ContactsForm extends Component {
-  handleSubmit = (values, { resetForm }) => {
-    this.props.onSubmit(values);
-    resetForm();
+
+export const ContactsForm = ({ onSubmit }) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmitForm = data => {
+    onSubmit(data);
+    reset();
   };
 
-  render() {
-    return (
-      <Formik
-        initialValues={{ name: '', number: '' }}
-        onSubmit={this.handleSubmit}
-        validationSchema={schema}
-      >
-        <FormAddContact>
-          <FormLabel htmlFor="name">
-            Name
-            <FormInput id="name" name="name" type="text" />
-            <FormError component="span" name="name" />
-          </FormLabel>
-          <FormLabel htmlFor="number">
-            Number
-            <FormInput id="number" name="number" type="tel" />
-            <FormError component="span" name="number" />
-          </FormLabel>
-          <FormBtn type="submit">Add contact</FormBtn>
-        </FormAddContact>
-      </Formik>
-    );
-  }
-}
+  return (
+    <Form onSubmit={handleSubmit(onSubmitForm)}>
+      <Label htmlFor="name">
+        Name
+        <Input id="name" {...register('name')} type="text" />
+        <Error>{errors.name?.message}</Error>
+      </Label>
+      <Label htmlFor="number">
+        Number
+        <Input id="number" {...register('number')} type="tel" />
+        <Error>{errors.number?.message}</Error>
+      </Label>
+      <FormBtn type="submit">Add contact</FormBtn>
+    </Form>
+  );
+};
+
 ContactsForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };

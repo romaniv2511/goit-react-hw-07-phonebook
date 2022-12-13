@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { Form, Field, ErrorMessage } from 'formik';
 
-export const FormAddContact = styled(Form)`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -11,20 +10,20 @@ export const FormAddContact = styled(Form)`
   margin-bottom: 16px;
   max-width: 400px;
 `;
-export const FormLabel = styled.label`
+export const Label = styled.label`
   display: flex;
   flex-direction: column;
   gap: 10px;
   height: 92px;
 `;
-export const FormInput = styled(Field)`
+export const Input = styled.input`
   border: 1px solid black;
   border-radius: 4px;
 
   font-size: 16px;
   padding: 4px 8px;
 `;
-export const FormError = styled(ErrorMessage)`
+export const Error = styled.p`
   font-size: 12px;
   color: red;
 `;
