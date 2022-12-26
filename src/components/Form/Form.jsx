@@ -1,8 +1,12 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import PropTypes from 'prop-types';
+
 import { Form, Label, Input, Error, FormBtn } from './Form.styled';
+import { addContact } from 'redux/contactsSlice';
+import { getContacts } from 'redux/selectors';
 
 const schema = Yup.object().shape({
   name: Yup.string()
@@ -23,7 +27,7 @@ const schema = Yup.object().shape({
     .required(),
 });
 
-export const ContactsForm = ({ onSubmit }) => {
+export const ContactsForm = () => {
   const {
     register,
     handleSubmit,
@@ -33,13 +37,21 @@ export const ContactsForm = ({ onSubmit }) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmitForm = data => {
-    onSubmit(data);
+  const dispatch = useDispatch();
+  const contacts = useSelector(getContacts);
+
+  const onSubmit = ({ name, number }) => {
+    const isDuplicated = contacts.some(i => i.name === name);
+    if (isDuplicated) {
+      alert(`"${name}" is already in contacts`);
+      return;
+    }
+    dispatch(addContact({ name, number }));
     reset();
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmitForm)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Label htmlFor="name">
         Name
         <Input id="name" {...register('name')} type="text" />
@@ -53,8 +65,4 @@ export const ContactsForm = ({ onSubmit }) => {
       <FormBtn type="submit">Add contact</FormBtn>
     </Form>
   );
-};
-
-ContactsForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
 };
