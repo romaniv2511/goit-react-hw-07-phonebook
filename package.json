@@ -2,7 +2,7 @@
   "name": "react-homework-template",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://romaniv2511.github.io/goit-react-hw-04-phonebook/",
+  "homepage": "https://romaniv2511.github.io/goit-react-hw-06-phonebook/",
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
     "@redux-devtools/extension": "^3.2.3",

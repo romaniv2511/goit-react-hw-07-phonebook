@@ -1,10 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { changeFilter } from 'redux/filterSlice';
-import { getFilter } from 'redux/selectors';
 
 export const Filter = () => {
   const dispatch = useDispatch();
-  const filterValue = useSelector(getFilter);
 
   return (
     <>
@@ -13,7 +11,6 @@ export const Filter = () => {
         name="filterByName"
         type="text"
         onChange={e => dispatch(changeFilter(e.target.value))}
-        value={filterValue}
       />
     </>
   );
