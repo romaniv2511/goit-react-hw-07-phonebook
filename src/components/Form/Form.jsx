@@ -41,7 +41,9 @@ export const ContactsForm = () => {
   const contacts = useSelector(getContacts);
 
   const onSubmit = ({ name, number }) => {
-    const isDuplicated = contacts.some(i => i.name === name);
+    const isDuplicated = contacts.some(
+      i => i.name.toLowerCase() === name.toLowerCase()
+    );
     if (isDuplicated) {
       alert(`"${name}" is already in contacts`);
       return;
