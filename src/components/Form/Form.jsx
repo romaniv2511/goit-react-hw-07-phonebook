@@ -5,8 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { Form, Label, Input, Error, FormBtn } from './Form.styled';
-import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/operations';
+import { getContacts } from 'redux/contacts/contactsSelectors';
 
 const schema = Yup.object().shape({
   name: Yup.string()
